@@ -1,4 +1,4 @@
 turtle-js
 =========
 
-a tiny js game library
+A tiny js game library
