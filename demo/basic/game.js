@@ -1,11 +1,22 @@
 addEventListener("load", function() {
 
-  //objects behaivor (called pre frame-update)
+  //objects behaivor (called for every objects in the scene before collision detection)
+  //dt = delta time (used for framerate independence) 
   var objBehaviorPre = function(dt) {
+    //increase x-position based on x-speed
     this.x += this.sx * dt;
   };
 
-  //objects behaivor (called post frame-update)
+  //collision handler (called everytime two object collides)
+  //'a' and 'b' are the two objects, 'side' is the collision's side
+  var collisionHandler = function(a, b, side) {
+    if(a.id === 'player' && b.is('object')) {
+      alert('boom!');
+      b.active = false;
+    }
+  };
+
+  //objects behaivor (called for every objects in the scene after collision detection)
   var objBehaviorPost = function(dt) {
     if(this.id == 'player') {
       if (Turtle.controls.isKeyPressed(Turtle.keyCodes.RIGHT)) {
@@ -19,10 +30,11 @@ addEventListener("load", function() {
   
   //initialize the game
   Turtle.init({
-    container: '#game',
-    block: 64,
-    height: 20,
-    width: 30,
+    container: '#game', //DOM element
+    block: 64, //block size (64x64)
+    height: 20, //game height in block
+    width: 30, //game width in block
+    collisionHandler: collisionHandler,
     objectBehavior: {pre: objBehaviorPre, post: objBehaviorPost}
   });
   
@@ -35,8 +47,16 @@ addEventListener("load", function() {
     y:300
   });
   
-  //put the player in the scene, the scene in the game, and run the scene
+  //create another object
+  var obj1 = new Turtle.Object('object1', {
+    type: ['object'],
+    x: 700,
+    y:300
+  });
+    
+  //put the entities in the scene, the scene in the game, and run the scene
   main.addObject(player);
+  main.addObject(obj1);
   Turtle.addScene(main);
   Turtle.runScene('main');
 
