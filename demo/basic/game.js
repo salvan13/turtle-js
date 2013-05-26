@@ -12,7 +12,7 @@ addEventListener("load", function() {
   var collisionHandler = function(a, b, side) {
     if(a.id === 'player' && b.is('object')) {
       alert('boom!');
-      b.active = false;
+      b.destroy();
     }
   };
 
