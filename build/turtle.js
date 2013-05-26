@@ -285,6 +285,7 @@ Turtle.Object = function(id, p) {
   this.sy = p.sy || 0;
   this.type = p.type || ['default'];
   this.sprite = p.sprite || null;
+  this.spritecnt = 0;
   this.animspeed = p.animspeed || 0.7;
   this.objects = {};
   this.ondraw = p.ondraw;
@@ -311,13 +312,12 @@ Turtle.Object.prototype = {
     if(this.sprite) {
       var sprite = this.sprite.apply(this);
       if(sprite) {
-        sprite.cnt = sprite.cnt || 0;
         sprite.nr = sprite.nr || 1;
-        var spritex = sprite.x + Math.round(sprite.cnt) % sprite.nr * this.w;
+        var spritex = sprite.x + Math.round(this.spritecnt) % sprite.nr * this.w;
         ctx.drawImage(Turtle.getData().spritesheet, spritex, sprite.y, this.w, this.h, x, y, this.w, this.h);
-        sprite.cnt += dt * this.animspeed;
-        if(sprite.cnt > 99) {
-          sprite.cnt = 0;
+        this.spritecnt += dt * this.animspeed;
+        if(this.spritecnt > 99) {
+          this.spritecnt = 0;
         }
         return;
       }
