@@ -144,8 +144,17 @@ var Turtle = (function(win, doc) {
     });
     ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(scaleFactor, scaleFactor);
-    ctx.drawImage(cached, 0, 0);
+    if(scene.center) {
+      ctx.drawImage(cached, 
+        Math.min(Math.max(0, scene.center.getX()), width - scene.center.getW()), 
+        Math.min(Math.max(0, scene.center.getY()), height - scene.center.getH()),
+        scene.center.getW(),
+        scene.center.getH(),
+      0, 0, canvas.width, canvas.height);
+    } else {
+      ctx.scale(scaleFactor, scaleFactor);
+      ctx.drawImage(cached, 0, 0);
+    }
     ctx.restore();
   };
 
