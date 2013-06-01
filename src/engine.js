@@ -2,7 +2,7 @@ var Turtle = (function(win, doc) {
 
   "use strict";
 
-  var params, block, height, width, container, canvas, ctx, scaleFactor = 1, scenes = [], buffer, bufferCtx, time = 0, scene, spritesheet, collisionHandler;
+  var params, block, height, width, container, canvas, ctx, scaleFactor = 1, scenes = [], buffer, bufferCtx, time = 0, scene, spritesheet, collisionHandler, paused;
 
   var init = function(p) {
     params = p;
@@ -24,11 +24,13 @@ var Turtle = (function(win, doc) {
   };
 
   var loop = function() {
-    var now = new Date().getTime(),
-    dt = (now - time)/100; //delta time
-    time = now;
-    update(dt);
-    draw(dt);
+    if(!paused) {
+      var now = new Date().getTime(),
+      dt = (now - time)/100; //delta time
+      time = now;
+      update(dt);
+      draw(dt);
+    }
     win.requestAnimFrame(loop);
   };
 
@@ -205,12 +207,17 @@ var Turtle = (function(win, doc) {
       spritesheet: spritesheet
     };
   };
+  
+  var pause = function(val) {
+    paused = val;
+  };
 
   return {
     init: init,
     addScene: addScene,
     runScene: runScene,
-    getData: getData
+    getData: getData,
+    pause: pause
   };
 
 })(window, document);
