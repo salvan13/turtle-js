@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         }        
       },
       options: {
-        banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %>\nhttps://github.com/salvan13/turtle-js */\n'
       }
     },
     concat: {
