@@ -394,17 +394,17 @@ Turtle.sound = (function(){
 
   "use strict";
 
-  var data = {};
+  var sounds = {};
 
   var add = function(id, sound) {
-      data[id] = sound;
+      sounds[id] = new Audio(sound);
   };
 
   var play = function(id, loop) {
-    if(data[id]) {
-      var a = new Audio(data[id]);
-      a.loop = loop || false;
-      a.play();
+    if(sounds[id]) {
+      var s = sounds[id];
+      s.loop = loop || false;
+      s.play();
     }
   };
 
